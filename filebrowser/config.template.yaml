@@ -1,0 +1,310 @@
+# Rendered by install.sh from this template. Do not edit config.yaml by hand
+# unless you know what you are doing - re-running install.sh overwrites it.
+server:
+  minSearchLength: 3
+  disableUpdateCheck: false
+  # Low values suit old CPUs. Raise to core count on fast machines.
+  numImageProcessors: 1
+  socket: ""
+  tlsKey: ""
+  tlsCert: ""
+  disablePreviews: false
+  disablePreviewResize: false
+  disableTypeDetectionByHeader: false
+  port: 80
+  listen: "0.0.0.0"
+  baseURL: "/"
+  logging:
+    - levels: ""
+      apiLevels: ""
+      output: "stdout"
+      noColors: false
+      json: false
+      utc: false
+      apiFilter: ""
+  database: "/home/filebrowser/data/filebrowser.sqlite"
+  sources:
+    - path: "/storage"
+      name: "Storage"
+      config:
+        denyByDefault: false
+        private: false
+        readOnly: false
+        disabled: false
+        indexingIntervalMinutes: 0
+        conditionals:
+          hidden: false
+          ignoreHidden: false
+          ignoreZeroSizeFolders: false
+          rules:
+        rules:
+        defaultUserScope: "/"
+        defaultEnabled: true
+        createUserDir: false
+        useLogicalSize: false
+  externalUrl: "https://__DRIVE_DOMAIN__"
+  internalUrl: "http://filebrowser:80"
+  cacheDir: "/home/filebrowser/data/tmp"
+  cacheDirCleanup: true
+  maxArchiveSize: 20
+  filesystem:
+    createFilePermission: "644"
+    createDirectoryPermission: "755"
+  indexSqlConfig:
+    batchSize: 500
+    cacheSizeMB: 16
+    walMode: false
+    disableReuse: false
+    startupIntegrityCheck: "quickCheck"
+  disableWebDAV: false
+auth:
+  tokenExpirationHours: 2
+  methods:
+    proxy:
+      enabled: false
+      adminGroup: ""
+      userGroups:
+      groupsClaim: ""
+      userIdentifier: ""
+      disableVerifyTLS: false
+      logoutRedirectUrl: ""
+      createUser: false
+      header: ""
+    noauth: false
+    password:
+      enabled: true
+      minLength: 5
+      signup: false
+      recaptcha:
+        host: ""
+        key: ""
+        secret: ""
+      enforcedOtp: false
+    oidc:
+      enabled: false
+      adminGroup: ""
+      userGroups:
+      groupsClaim: ""
+      userIdentifier: ""
+      disableVerifyTLS: false
+      logoutRedirectUrl: ""
+      createUser: false
+      clientId: ""
+      clientSecret: ""
+      issuerUrl: ""
+      scopes: ""
+    ldap:
+      enabled: false
+      adminGroup: ""
+      userGroups:
+      groupsClaim: ""
+      userIdentifier: ""
+      disableVerifyTLS: false
+      logoutRedirectUrl: ""
+      createUser: false
+      server: ""
+      baseDN: ""
+      userDN: ""
+      userPassword: ""
+      userFilter: ""
+    jwt:
+      enabled: false
+      adminGroup: ""
+      userGroups:
+      groupsClaim: ""
+      userIdentifier: ""
+      disableVerifyTLS: false
+      logoutRedirectUrl: ""
+      createUser: false
+      header: ""
+      secret: ""
+      algorithm: ""
+    passkey:
+      enabled: false
+      rpDisplayName: ""
+      rpId: ""
+      rpOrigins:
+      loginButtonText: ""
+  # Bootstrap admin, used on FIRST start when the database is still empty.
+  # Change the password right after first login.
+  key: "__FB_AUTH_KEY__"
+  adminUsername: "__FB_ADMIN_USER__"
+  adminPassword: "__FB_ADMIN_PASS__"
+  totpSecret: ""
+frontend:
+  name: "__SITE_NAME__"
+  disableDefaultLinks: false
+  disableUsedPercentage: false
+  externalLinks: []
+  disableNavButtons: false
+  styling:
+    disableEventThemes: false
+    customCSS: ""
+    lightBackground: "#f5f5f5"
+    darkBackground: "#141D24"
+    customThemes:
+      alternative:
+        description: "Reduce rounded corners"
+        css: "reduce-rounded-corners.css"
+      default:
+        description: "The default theme"
+        css: ""
+  favicon: ""
+  description: "Self-hosted file storage with online document editing"
+  loginIcon: ""
+  loginButtonText: ""
+  oidcLoginButtonText: ""
+userDefaults:
+  sidebar:
+    disableQuickToggles: false
+    hideFileActions: false
+    disableHideOnPreview: false
+    sticky: true
+    hideFiles: false
+    showTools: true
+  listing:
+    deleteWithoutConfirming: false
+    dateFormat: false
+    showHidden: false
+    quickDownload: false
+    showSelectMultiple: false
+    singleClick: false
+    hideFileExt: ""
+    showCopyPath: false
+    deleteAfterArchive: true
+    viewMode: "normal"
+    gallerySize: 3
+  preview:
+    image: true
+    video: true
+    audio: true
+    # Disabled: ffmpeg transcoding is too heavy for old CPUs.
+    # Immich already handles video previews.
+    motionVideoPreview: false
+    office: true
+    popup: true
+    disablePreviewExt: ""
+    highQuality: false
+    folder: true
+    models: true
+    disableHideSidebar: false
+    defaultMediaPlayer: false
+    autoplayMedia: false
+  fileViewer:
+    editorQuickSave: false
+    autoplayMedia: true
+    disableViewingExt: ""
+    disableOnlyOfficeExt: ".md .txt .pdf .html .xml"
+    preferEditorForMarkdown: false
+    debugOffice: false
+    defaultMediaPlayer: false
+  search:
+    disableOptions: false
+  ui:
+    darkMode: true
+    themeColor: "var(--blue)"
+    customTheme: ""
+    locale: "en"
+  fileLoading:
+    maxConcurrentUpload: 10
+    uploadChunkSizeMb: 10
+    clearAll: false
+    downloadChunkSizeMb: 0
+  account:
+    permissions:
+      api: false
+      admin: false
+      modify: false
+      share: false
+      realtime: false
+      delete: false
+      create: false
+      download: true
+    lockPassword: false
+    disableSettings: false
+    loginMethod: "password"
+    disableUpdateNotifications: false
+  editorQuickSave: false
+  hideSidebarFileActions: false
+  disableQuickToggles: false
+  disableSearchOptions: false
+  stickySidebar: false
+  hideFilesInTree: false
+  darkMode: null
+  locale: ""
+  viewMode: ""
+  singleClick: false
+  showHidden: false
+  hideFileExt: ""
+  dateFormat: false
+  gallerySize: 0
+  themeColor: ""
+  quickDownload: false
+  disablePreviewExt: ""
+  disableViewingExt: ""
+  lockPassword: false
+  disableSettings: false
+  permissions:
+    api: false
+    admin: false
+    modify: false
+    share: false
+    realtime: false
+    delete: false
+    create: false
+    download: null
+  loginMethod: ""
+  disableUpdateNotifications: false
+  deleteWithoutConfirming: false
+  deleteAfterArchive: false
+  disableOfficePreviewExt: ""
+  disableOnlyOfficeExt: ""
+  customTheme: ""
+  showSelectMultiple: false
+  showToolsInSidebar: null
+  debugOffice: false
+  preferEditorForMarkdown: false
+  showCopyPath: false
+integrations:
+  office:
+    url: "https://__OFFICE_DOMAIN__"
+    internalUrl: "http://onlyoffice:80"
+    secret: "__ONLYOFFICE_JWT__"
+    viewOnly: false
+  media:
+    ffmpegPath: "/usr/local/bin/"
+    convert:
+      imagePreview:
+        heic: true
+        jpeg: true
+      # All video transcoding disabled (see preview.motionVideoPreview note).
+      videoPreview:
+        3g2: false
+        3gp: false
+        asf: false
+        avi: false
+        f4v: false
+        flv: false
+        m2ts: false
+        m4v: false
+        mkv: false
+        mov: false
+        mp4: false
+        mpeg: false
+        mpg: false
+        ogv: false
+        ts: false
+        vob: false
+        webm: false
+        wmv: false
+    debug: false
+    extractEmbeddedSubtitles: false
+    exiftoolPath: "/usr/bin/exiftool"
+http:
+  trustedHeaders:
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
+    - X-Forwarded-For
+    - X-Real-IP
+    - CF-Connecting-IP
+  disableRateLimit: false

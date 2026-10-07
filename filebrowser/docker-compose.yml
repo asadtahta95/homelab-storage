@@ -1,0 +1,63 @@
+services:
+  filebrowser:
+    image: gtstef/filebrowser:stable
+    container_name: filebrowser
+    ports:
+      - "${FB_PORT:-8080}:80"
+    environment:
+      - FILEBROWSER_CONFIG=/home/filebrowser/data/config.yaml
+      - FILEBROWSER_DATABASE=/home/filebrowser/data/filebrowser.sqlite
+    volumes:
+      - ./data:/home/filebrowser/data
+      - ${STORAGE_PATH}:/storage:rw
+    group_add:
+      # Lets uid 1000 write to OMV-style root:users shared folders.
+      # Harmless if gid 100 does not exist on the host.
+      - "100"
+    tmpfs:
+      # RAM cache for thumbnails/chunks. Raise on machines with plenty of RAM.
+      - /home/filebrowser/data/tmp:size=2g,mode=1777
+    restart: unless-stopped
+    mem_limit: 1.5g
+    cpus: 1.5
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - office-net
+
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice
+    expose:
+      - "80"
+    ports:
+      - "${OFFICE_BIND:-127.0.0.1:8081}:80"
+    environment:
+      - JWT_ENABLED=true
+      - JWT_SECRET=${ONLYOFFICE_JWT_SECRET}
+      - JWT_HEADER=AuthorizationJwt
+      - ALLOW_PRIVATE_IPADDR=true
+      - USE_UNAUTHORIZED_STORAGE=true
+      - NGINX_WORKER_PROCESSES=1
+      - NGINX_WORKER_CONNECTIONS=256
+    volumes:
+      - ./onlyoffice-Data:/var/www/onlyoffice/Data
+      - ./onlyoffice-logs:/var/log/onlyoffice
+      - ./onlyoffice-lib:/var/lib/onlyoffice
+    restart: unless-stopped
+    mem_limit: 1.5g
+    cpus: 2.0
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - office-net
+
+networks:
+  office-net:
+    driver: bridge

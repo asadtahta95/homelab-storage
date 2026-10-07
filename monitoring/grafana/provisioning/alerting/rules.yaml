@@ -1,0 +1,118 @@
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: infra
+    folder: Alerts
+    interval: 1m
+    rules:
+      - uid: rule-target-down
+        title: Target monitoring DOWN
+        condition: B
+        for: 2m
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              datasource:
+                type: prometheus
+                uid: PBFA97CFB590B2093
+              expr: up
+              refId: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+          - refId: B
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: __expr__
+            model:
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: '$A == 0'
+              refId: B
+              type: math
+        noDataState: NoData
+        execErrState: Error
+        annotations:
+          summary: "Target {{ $labels.job }} / {{ $labels.instance }} terpantau DOWN"
+        labels:
+          severity: critical
+        isPaused: true
+      - uid: rule-disk-full
+        title: Disk hampir penuh (>85%)
+        condition: B
+        for: 5m
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              datasource:
+                type: prometheus
+                uid: PBFA97CFB590B2093
+              expr: (1 - (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay|squashfs"} / node_filesystem_size_bytes)) * 100
+              refId: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+          - refId: B
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: __expr__
+            model:
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: '$A > 85'
+              refId: B
+              type: math
+        noDataState: OK
+        execErrState: Error
+        annotations:
+          summary: "Disk {{ $labels.instance }}:{{ $labels.mountpoint }} > 85%"
+        labels:
+          severity: warning
+        isPaused: true
+      - uid: rule-mikrotik-cpu
+        title: CPU Mikrotik tinggi (>85%)
+        condition: B
+        for: 5m
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              datasource:
+                type: prometheus
+                uid: PBFA97CFB590B2093
+              expr: mktxp_system_cpu_load
+              refId: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+          - refId: B
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: __expr__
+            model:
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: '$A > 85'
+              refId: B
+              type: math
+        noDataState: OK
+        execErrState: Error
+        annotations:
+          summary: "CPU {{ $labels.routerboard_name }} > 85%"
+        labels:
+          severity: warning
+        isPaused: true

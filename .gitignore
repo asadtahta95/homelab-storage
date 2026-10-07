@@ -1,0 +1,23 @@
+# Secrets & local state - NEVER commit these
+.env
+*.env
+!*.example
+!*.template.*
+
+# Runtime data
+filebrowser/data/
+filebrowser/onlyoffice-*/
+immich/postgres/
+monitoring/grafana/data/
+*.sqlite
+*.db
+*.db-shm
+*.db-wal
+*.sql.gz
+*.tar.gz
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*~
+*.bak

@@ -1,0 +1,379 @@
+{
+  "uid": "listrik-rumah",
+  "title": "Listrik Rumah",
+  "tags": ["smart-home", "energi"],
+  "timezone": "Asia/Jakarta",
+  "schemaVersion": 39,
+  "version": 2,
+  "time": { "from": "now-7d", "to": "now" },
+  "refresh": "1m",
+  "templating": {
+    "list": [
+      {
+        "name": "DS_PROMETHEUS",
+        "type": "datasource",
+        "query": "prometheus",
+        "current": { "value": "${DS_PROMETHEUS}", "text": "Prometheus" },
+        "hide": 0
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "row",
+      "title": "Rumah Ibu — MCB Rumah",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Daya Sekarang",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 0, "y": 1, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "watt", "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_power_w{entity=\"sensor.mcb_rumah_power\"}",
+          "legendFormat": "MCB Rumah",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Energi Hari Ini",
+      "description": "Kenaikan kWh dalam 24 jam terakhir",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 6, "y": 1, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "kwatth", "decimals": 2 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "increase(hass_sensor_energy_kwh{entity=\"sensor.mcb_rumah_total_energy\"}[1d])",
+          "legendFormat": "MCB Rumah",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Total Energi (kumulatif)",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 12, "y": 1, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "kwatth", "decimals": 1 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_energy_kwh{entity=\"sensor.mcb_rumah_total_energy\"}",
+          "legendFormat": "MCB Rumah",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Tegangan",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 18, "y": 1, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "volt", "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_voltage_v{entity=\"sensor.mcb_rumah_voltage\"}",
+          "legendFormat": "MCB Rumah",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Daya MCB Rumah (7 hari)",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 0, "y": 5, "w": 24, "h": 8 },
+      "fieldConfig": {
+        "defaults": { "unit": "watt", "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_power_w{entity=\"sensor.mcb_rumah_power\"}",
+          "legendFormat": "MCB Rumah",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "row",
+      "title": "Rumah Saya — MCB Kulon & Wetan",
+      "gridPos": { "x": 0, "y": 13, "w": 24, "h": 1 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "Daya Kulon",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 0, "y": 14, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "watt", "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_power_w{entity=\"sensor.kulon_power\"}",
+          "legendFormat": "Kulon",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "Daya Wetan",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 6, "y": 14, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "watt", "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_power_w{entity=\"sensor.wetan_power\"}",
+          "legendFormat": "Wetan",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "Energi Kulon Hari Ini",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 12, "y": 14, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "kwatth", "decimals": 2 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "increase(hass_sensor_energy_kwh{entity=\"sensor.kulon_total_energy\"}[1d])",
+          "legendFormat": "Kulon",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "Energi Wetan Hari Ini",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 18, "y": 14, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "kwatth", "decimals": 2 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "increase(hass_sensor_energy_kwh{entity=\"sensor.wetan_total_energy\"}[1d])",
+          "legendFormat": "Wetan",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Daya Kulon vs Wetan (7 hari)",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 0, "y": 18, "w": 24, "h": 8 },
+      "fieldConfig": {
+        "defaults": { "unit": "watt", "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_power_w{entity=\"sensor.kulon_power\"}",
+          "legendFormat": "Kulon",
+          "refId": "A"
+        },
+        {
+          "expr": "hass_sensor_power_w{entity=\"sensor.wetan_power\"}",
+          "legendFormat": "Wetan",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "type": "row",
+      "title": "Rumah Saya — Total Kumulatif & Tegangan",
+      "gridPos": { "x": 0, "y": 26, "w": 24, "h": 1 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 17,
+      "type": "stat",
+      "title": "Total Energi Kulon",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 0, "y": 27, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "kwatth", "decimals": 1 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_energy_kwh{entity=\"sensor.kulon_total_energy\"}",
+          "legendFormat": "Kulon",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "type": "stat",
+      "title": "Total Energi Wetan",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 6, "y": 27, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "kwatth", "decimals": 1 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_energy_kwh{entity=\"sensor.wetan_total_energy\"}",
+          "legendFormat": "Wetan",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "type": "stat",
+      "title": "Tegangan Kulon",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 12, "y": 27, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "volt", "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_voltage_v{entity=\"sensor.kulon_voltage\"}",
+          "legendFormat": "Kulon",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "type": "stat",
+      "title": "Tegangan Wetan",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 18, "y": 27, "w": 6, "h": 4 },
+      "fieldConfig": {
+        "defaults": { "unit": "volt", "decimals": 0 },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "hass_sensor_voltage_v{entity=\"sensor.wetan_voltage\"}",
+          "legendFormat": "Wetan",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "type": "row",
+      "title": "Pemakaian Harian (kWh per hari)",
+      "gridPos": { "x": 0, "y": 31, "w": 24, "h": 1 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 22,
+      "type": "timeseries",
+      "title": "Harian MCB Rumah",
+      "description": "Kenaikan kWh per 24 jam, dikelompokkan harian",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 0, "y": 32, "w": 12, "h": 8 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "kwatth",
+          "decimals": 2,
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "barWidthFactor": 0.7,
+            "lineWidth": 0,
+            "pointSize": 0
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "increase(hass_sensor_energy_kwh{entity=\"sensor.mcb_rumah_total_energy\"}[1d])",
+          "legendFormat": "MCB Rumah",
+          "interval": "1d",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "type": "timeseries",
+      "title": "Harian Kulon vs Wetan",
+      "description": "Kenaikan kWh per 24 jam, dikelompokkan harian",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "x": 12, "y": 32, "w": 12, "h": 8 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "kwatth",
+          "decimals": 2,
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "barWidthFactor": 0.7,
+            "lineWidth": 0,
+            "pointSize": 0
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "increase(hass_sensor_energy_kwh{entity=\"sensor.kulon_total_energy\"}[1d])",
+          "legendFormat": "Kulon",
+          "interval": "1d",
+          "refId": "A"
+        },
+        {
+          "expr": "increase(hass_sensor_energy_kwh{entity=\"sensor.wetan_total_energy\"}[1d])",
+          "legendFormat": "Wetan",
+          "interval": "1d",
+          "refId": "B"
+        }
+      ]
+    }
+  ]
+}
